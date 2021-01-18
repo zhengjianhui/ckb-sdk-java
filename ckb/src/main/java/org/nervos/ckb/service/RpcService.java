@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.jetbrains.annotations.NotNull;
 import org.nervos.ckb.utils.Numeric;
 
 /** Copyright © 2019 Nervos Foundation. All rights reserved. */
@@ -29,7 +28,7 @@ public class RpcService {
     url = rpcUrl;
     if (isDebug) {
       HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-      logging.level(HttpLoggingInterceptor.Level.BODY);
+      logging.setLevel(HttpLoggingInterceptor.Level.BODY);
       client = new OkHttpClient.Builder().addInterceptor(logging).build();
     } else {
       client = new OkHttpClient();
@@ -37,9 +36,9 @@ public class RpcService {
     gson = new Gson();
   }
 
-  public <T> T post(@NotNull String method, List params, Type cls) throws IOException {
+  public <T> T post(String method, List params, Type cls) throws IOException {
     RequestParams requestParams = new RequestParams(method, params);
-    RequestBody body = RequestBody.create(gson.toJson(requestParams), JSON_MEDIA_TYPE);
+    RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, gson.toJson(requestParams));
     Request request = new Request.Builder().url(url).post(body).build();
     Response response = client.newCall(request).execute();
     if (response.isSuccessful()) {
@@ -63,23 +62,21 @@ public class RpcService {
     }
   }
 
-  public <T> void postAsync(
-      @NotNull String method, List params, @NotNull Type cls, @NotNull RpcCallback<T> callback) {
+  public <T> void postAsync(String method, List params, Type cls, RpcCallback<T> callback) {
     RequestParams requestParams = new RequestParams(method, params);
-    RequestBody body = RequestBody.create(gson.toJson(requestParams), JSON_MEDIA_TYPE);
+    RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, gson.toJson(requestParams));
     Request request = new Request.Builder().url(url).post(body).build();
     client
         .newCall(request)
         .enqueue(
             new Callback() {
               @Override
-              public void onFailure(@NotNull Call call, @NotNull IOException e) {
+              public void onFailure(Call call, IOException e) {
                 callback.onFailure(e.getMessage());
               }
 
               @Override
-              public void onResponse(@NotNull Call call, @NotNull Response response)
-                  throws IOException {
+              public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                   String responseBody = Objects.requireNonNull(response.body()).string();
                   RpcResponse<T> rpcResponse =
@@ -116,7 +113,7 @@ public class RpcService {
       paramsList.add(
           new RequestParams(request.get(0).toString(), request.subList(1, request.size())));
     }
-    RequestBody body = RequestBody.create(gson.toJson(paramsList), JSON_MEDIA_TYPE);
+    RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, gson.toJson(paramsList));
     Request request = new Request.Builder().url(url).post(body).build();
     Response response = client.newCall(request).execute();
     if (response.isSuccessful()) {
