@@ -6,7 +6,7 @@ import mercury.constant.CkbHolder;
 import mercury.constant.MercuryApiHolder;
 import model.*;
 import model.resp.MercuryScriptGroup;
-import model.resp.TransferCompletionResponse;
+import model.resp.TransactionCompletionResponse;
 import org.junit.jupiter.api.Test;
 import org.nervos.ckb.transaction.Secp256k1SighashAllBuilder;
 import org.nervos.ckb.type.transaction.Transaction;
@@ -25,15 +25,16 @@ public class ActionTest {
   @Test
   void transferCompletionCkbWithPayByFrom() {
     TransferPayloadBuilder builder = new TransferPayloadBuilder();
-    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress1()), Source.owned));
+    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress0()), Source.owned));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
         new BigInteger("100"));
     builder.fee(new BigInteger("1"));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
+      System.out.println(g.toJson(s));
       Transaction tx = sign(s);
 
       String result = CkbHolder.getApi().sendTransaction(tx);
@@ -55,7 +56,7 @@ public class ActionTest {
     builder.fee(new BigInteger("1"));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
       Transaction tx = sign(s);
 
@@ -77,7 +78,7 @@ public class ActionTest {
     builder.fee(new BigInteger("1"));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
     } catch (Exception e) {
       assertEquals("The transaction does not support ckb", e.getMessage());
@@ -95,7 +96,7 @@ public class ActionTest {
     builder.fee(new BigInteger("1"));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
       Transaction tx = sign(s);
       System.out.println(g.toJson(s.txView));
@@ -118,7 +119,7 @@ public class ActionTest {
     builder.fee(new BigInteger("1"));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
     } catch (Exception e) {
       assertEquals("The transaction does not support ckb", e.getMessage());
@@ -138,7 +139,7 @@ public class ActionTest {
     System.out.println(g.toJson(builder.build()));
 
     try {
-      TransferCompletionResponse s =
+      TransactionCompletionResponse s =
           MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
       Transaction tx = sign(s);
       System.out.println(g.toJson(s.txView));
@@ -151,11 +152,9 @@ public class ActionTest {
     }
   }
 
-  private Transaction sign(TransferCompletionResponse s) throws IOException {
+  private Transaction sign(TransactionCompletionResponse s) throws IOException {
     List<MercuryScriptGroup> scriptGroups = s.getScriptGroup();
     Secp256k1SighashAllBuilder signBuilder = new Secp256k1SighashAllBuilder(s.txView);
-
-    scriptGroups.get(0).inputIndexes = Arrays.asList(0, 1);
 
     for (MercuryScriptGroup sg : scriptGroups) {
       signBuilder.sign(sg, AddressWithKeyHolder.getKey(sg.pubKey));

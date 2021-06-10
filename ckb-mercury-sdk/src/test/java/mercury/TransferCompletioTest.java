@@ -6,7 +6,7 @@ import mercury.constant.CkbHolder;
 import mercury.constant.MercuryApiHolder;
 import model.*;
 import model.resp.MercuryScriptGroup;
-import model.resp.TransferCompletionResponse;
+import model.resp.TransactionCompletionResponse;
 import org.junit.jupiter.api.Test;
 import org.nervos.ckb.transaction.Secp256k1SighashAllBuilder;
 import org.nervos.ckb.type.transaction.Transaction;
@@ -104,7 +104,7 @@ public class TransferCompletioTest {
   }
 
   private void sendTx(TransferPayloadBuilder builder) throws IOException {
-    TransferCompletionResponse s =
+    TransactionCompletionResponse s =
         MercuryApiHolder.getApi().buildTransferTransaction(builder.build());
     List<MercuryScriptGroup> scriptGroups = s.getScriptGroup();
     Secp256k1SighashAllBuilder signBuilder = new Secp256k1SighashAllBuilder(s.txView);
