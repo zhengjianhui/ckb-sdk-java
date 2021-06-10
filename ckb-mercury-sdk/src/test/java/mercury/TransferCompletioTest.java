@@ -23,7 +23,7 @@ public class TransferCompletioTest {
   @Test
   void SingleFromSingleTo() {
     TransferPayloadBuilder builder = new TransferPayloadBuilder();
-    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress1()), Source.owned));
+    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress1()), Source.unconstrained));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
         new BigInteger("100"));
@@ -40,7 +40,7 @@ public class TransferCompletioTest {
   @Test
   void SingleFromMultiTo() {
     TransferPayloadBuilder builder = new TransferPayloadBuilder();
-    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress1()), Source.owned));
+    builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress1()), Source.unconstrained));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
         new BigInteger("100"));
@@ -62,7 +62,7 @@ public class TransferCompletioTest {
     builder.from(
         new FromAccount(
             Arrays.asList(AddressWithKeyHolder.testAddress1(), AddressWithKeyHolder.testAddress2()),
-            Source.owned));
+            Source.unconstrained));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress3(), Action.pay_by_from),
         new BigInteger("100"));
@@ -84,7 +84,7 @@ public class TransferCompletioTest {
     builder.from(
         new FromAccount(
             Arrays.asList(AddressWithKeyHolder.testAddress1(), AddressWithKeyHolder.testAddress2()),
-            Source.owned));
+            Source.unconstrained));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress3(), Action.pay_by_from),
         new BigInteger("100"));
