@@ -60,7 +60,7 @@ public class TransferPayload {
     private String change;
     // - change 表示找零地址：若 change 为空，则默认将 from 的第一个地址作为找零地址。
     private BigInteger fee;
-    // - fee 表示交易费
+    // - fee 表示交易费，金额单位是 Shannon，1 ckb = 10^8 Shannon
 }
 
 public class FromAccount {
@@ -79,7 +79,7 @@ public class TransferItem {
     private ToAccount to;
     // - to 表示收款方的收款信息 
     private BigInteger amount;
-    // - amount 表示转账金额
+    // - amount 表示转账金额，金额单位是 ckb
 }
 
 public class ToAccount {
@@ -110,11 +110,11 @@ TransactionCompletionResponse buildWalletCreationTransaction(CreateWalletPayload
 
 public class CreateWalletPayload {
     private String ident;
-    // - ident 表示用于支付钱包所需的 ckb 的地址
+    // - ident 表示创建的钱包地址，该地址必须有足够创建钱包的 ckb（一般是 142 ckb）
     private List<WalletInfo> info;
     // - info 表示钱包的类型和参数
     private BigInteger fee;
-    // - fee 表示交易费
+    // - fee 表示交易费，金额单位是 Shannon，1 ckb = 10^8 Shannon
 }
 
 public class WalletInfo {
