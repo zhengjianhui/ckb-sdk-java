@@ -27,7 +27,7 @@ public class TransferCompletioTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       sendTx(builder);
@@ -47,7 +47,7 @@ public class TransferCompletioTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress3(), Action.pay_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       sendTx(builder);
@@ -65,8 +65,8 @@ public class TransferCompletioTest {
             Source.owned));
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress3(), Action.pay_by_from),
-        new BigInteger("10000"));
-    builder.fee(new BigInteger("1"));
+        new BigInteger("100"));
+    builder.fee(new BigInteger("1000000"));
 
     System.out.println(g.toJson(builder.build()));
 
@@ -91,7 +91,7 @@ public class TransferCompletioTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress4(), Action.pay_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     System.out.println(g.toJson(builder.build()));
 

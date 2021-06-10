@@ -15,7 +15,7 @@ public class BalanceTest {
   void getBalance() {
     try {
       GetBalanceResponse balance =
-          MercuryApiHolder.getApi().getBalance(null, AddressWithKeyHolder.testAddress4());
+          MercuryApiHolder.getApi().getBalance(null, AddressWithKeyHolder.testAddress0());
       assertNotNull(balance, "Balance is not empty");
       System.out.println(balance.owned);
     } catch (IOException e) {

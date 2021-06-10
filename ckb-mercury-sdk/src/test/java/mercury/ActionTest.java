@@ -27,9 +27,9 @@ public class ActionTest {
     TransferPayloadBuilder builder = new TransferPayloadBuilder();
     builder.from(new FromAccount(Arrays.asList(AddressWithKeyHolder.testAddress0()), Source.owned));
     builder.addItem(
-        new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
-        new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+        new ToAccount(AddressWithKeyHolder.testAddress4(), Action.pay_by_from),
+        new BigInteger("100"));              // unit: CKB, 1 CKB = 10^8 Shannon
+    builder.fee(new BigInteger("1000000"));   // unit: Shannon
 
     try {
       TransactionCompletionResponse s =
@@ -53,7 +53,7 @@ public class ActionTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.pay_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       TransactionCompletionResponse s =
@@ -75,7 +75,7 @@ public class ActionTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.lend_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       TransactionCompletionResponse s =
@@ -93,7 +93,7 @@ public class ActionTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress2(), Action.lend_by_from),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       TransactionCompletionResponse s =
@@ -116,7 +116,7 @@ public class ActionTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress1(), Action.pay_by_to),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     try {
       TransactionCompletionResponse s =
@@ -134,7 +134,7 @@ public class ActionTest {
     builder.addItem(
         new ToAccount(AddressWithKeyHolder.testAddress4(), Action.pay_by_to),
         new BigInteger("100"));
-    builder.fee(new BigInteger("1"));
+    builder.fee(new BigInteger("1000000"));
 
     System.out.println(g.toJson(builder.build()));
 
