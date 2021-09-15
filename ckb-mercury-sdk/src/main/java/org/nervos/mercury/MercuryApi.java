@@ -3,6 +3,7 @@ package org.nervos.mercury;
 import java.io.IOException;
 import java.util.List;
 import org.nervos.mercury.model.req.*;
+import org.nervos.mercury.model.req.payload.GetBalancePayload;
 import org.nervos.mercury.model.resp.*;
 
 public interface MercuryApi {
@@ -15,8 +16,8 @@ public interface MercuryApi {
   TransactionCompletionResponse buildAdjustAccountTransaction(AdjustAccountPayload payload)
       throws IOException;
 
-  TransactionCompletionResponse buildSmartTransferTransaction(SmartTransferPayload payload)
-      throws IOException;
+  //  TransactionCompletionResponse buildSmartTransferTransaction(SmartTransferPayload payload)
+  //      throws IOException;
 
   TransactionInfoWithStatusResponse getTransactionInfo(String txHash) throws IOException;
 
@@ -29,5 +30,5 @@ public interface MercuryApi {
 
   QueryTransactionsResponse queryTransactions(QueryTransactionsPayload payload) throws IOException;
 
-  Integer getAccountNumber(String address) throws IOException;
+  //  Integer getAccountNumber(String address) throws IOException;
 }

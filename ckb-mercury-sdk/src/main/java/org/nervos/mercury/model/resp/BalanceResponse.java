@@ -2,11 +2,14 @@ package org.nervos.mercury.model.resp;
 
 import com.google.gson.annotations.SerializedName;
 import java.math.BigInteger;
+import org.nervos.mercury.model.common.AssetInfo;
 
 /** @author zjh @Created Date: 2021/7/16 @Description: @Modify by: */
 public class BalanceResponse {
-  public String address;
+  @SerializedName("address_or_lock_hash")
+  public AddressOrLockHash addressOrLockHash;
 
+  @SerializedName("asset_info")
   public AssetInfo assetInfo;
 
   public BigInteger free;
@@ -16,16 +19,15 @@ public class BalanceResponse {
   public BigInteger freezed;
 
   public static class RpcBalanceResponse {
-    @SerializedName("key_address")
-    public String keyAddress;
+    @SerializedName("address_or_lock_hash")
+    public String addressOrLockHash;
 
-    @SerializedName("udt_hash")
-    public String udtHash;
+    public AssetInfo assetInfo;
 
-    public BigInteger unconstrained;
+    public BigInteger free;
 
-    public BigInteger fleeting;
+    public BigInteger claimable;
 
-    public BigInteger locked;
+    public BigInteger freezed;
   }
 }
